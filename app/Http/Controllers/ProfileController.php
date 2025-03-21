@@ -57,4 +57,16 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Display the user's posts.
+     */
+    public function posts(Request $request)
+    {
+        $posts = $request->user()->posts()->latest()->paginate(10);
+        
+        return view('profile.posts', [
+            'posts' => $posts
+        ]);
+    }
 }

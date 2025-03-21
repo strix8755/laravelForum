@@ -106,12 +106,12 @@
                     </div>
                 @else
                     <div class="flex items-center gap-3">
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-white/90 hover:text-white dark:text-white dark:hover:text-white/90 transition-colors">
+                        <a href="{{ url('login') }}" class="text-sm font-medium text-white/90 hover:text-white dark:text-white dark:hover:text-white/90 transition-colors">
                             Log in
                         </a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-4 py-2 bg-primary-600 border border-transparent rounded-md font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-1 focus:ring-offset-primary-700 transition-colors duration-150">
+                            <a href="{{ url('register') }}" class="inline-flex items-center justify-center px-4 py-2 bg-primary-600 border border-transparent rounded-md font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-1 focus:ring-offset-primary-700 transition-colors duration-150">
                                 Register
                             </a>
                         @endif
@@ -153,4 +153,3 @@
         <!-- ...existing responsive settings code... -->
     </div>
 </nav>
-```

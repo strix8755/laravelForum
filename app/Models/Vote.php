@@ -16,13 +16,13 @@ class Vote extends Model
         'vote'
     ];
 
-    public function votable()
-    {
-        return $this->morphTo();
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function votable()
+    {
+        return $this->morphTo();
     }
 }

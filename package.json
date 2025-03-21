@@ -16,6 +16,9 @@
         "vite": "^5.0.0",
         "alpinejs": "^3.13.3",
         "@tailwindcss/aspect-ratio": "^0.4.2",
-        "tailwindcss-animate": "^1.0.7"
+        "tailwindcss-animate": "^1.0.7",
+        "@vitejs/plugin-vue": "^5.0.3",
+        "vue": "^3.4.15",
+        "pinia": "^2.1.7"
     }
 }

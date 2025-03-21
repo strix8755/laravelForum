@@ -1,6 +1,29 @@
 import './bootstrap';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+
+// Import Alpine.js
 import Alpine from 'alpinejs';
 
+// Create Vue app
+const app = createApp({});
+const pinia = createPinia();
+
+// Register Vue components
+import ExampleComponent from './components/ExampleComponent.vue';
+app.component('example-component', ExampleComponent);
+
+import PostList from './components/PostList.vue';
+app.component('post-list', PostList);
+
+import PostShow from './components/PostShow.vue';
+app.component('post-show', PostShow);
+
+// Mount Vue app
+app.use(pinia);
+app.mount('#app');
+
+// Initialize Alpine.js
 window.Alpine = Alpine;
 Alpine.start();
 

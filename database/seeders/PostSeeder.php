@@ -4,10 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
-use App\Models\Vote;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class PostSeeder extends Seeder
 {
@@ -16,111 +13,37 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create some users if none exist
-        if (User::count() === 0) {
-            User::create([
-                'name' => 'Admin User',
-                'email' => 'admin@example.com',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
-            
-            User::create([
-                'name' => 'John Doe',
-                'email' => 'john@example.com',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
-            
-            User::create([
-                'name' => 'Jane Smith',
-                'email' => 'jane@example.com',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
-        }
-        
         $users = User::all();
         
-        // Create example posts
-        $posts = [
-            [
-                'title' => 'Welcome to our Community Forum!',
-                'content' => "This is the first post in our community forum. Feel free to join the discussion and share your thoughts!\n\nHere are some community guidelines:\n- Be respectful to others\n- No spam or self-promotion\n- Use proper formatting for code snippets\n- Have fun and engage with others",
-                'user_id' => $users->first()->id,
-                'created_at' => now()->subDays(7),
-                'updated_at' => now()->subDays(7),
-            ],
-            [
-                'title' => 'What programming language should I learn first?',
-                'content' => "I'm new to programming and trying to decide where to start. Should I learn JavaScript, Python, or something else? What are the pros and cons of each for beginners?",
-                'user_id' => $users->random()->id,
-                'created_at' => now()->subDays(5),
-                'updated_at' => now()->subDays(5),
-            ],
-            [
-                'title' => 'Best resources for learning web development in 2023',
-                'content' => "I've compiled a list of the best resources I've found for learning web development this year:\n\n1. freeCodeCamp - Completely free curriculum\n2. The Odin Project - Full stack path\n3. MDN Web Docs - Best reference for HTML/CSS/JS\n4. Frontend Mentor - Practice with real-world projects\n\nWhat other resources would you add to this list?",
-                'user_id' => $users->random()->id,
-                'created_at' => now()->subDays(3),
-                'updated_at' => now()->subDays(3),
-            ],
-            [
-                'title' => 'How to optimize database queries in Laravel',
-                'content' => "I've noticed my Laravel application is running slowly, especially on pages with lots of database queries. What are some techniques to optimize database performance in Laravel?\n\nSo far I've tried:\n- Adding indexes to frequently queried columns\n- Using eager loading with with()\n- Implementing caching\n\nAny other tips would be appreciated!",
-                'user_id' => $users->random()->id,
-                'created_at' => now()->subDays(2),
-                'updated_at' => now()->subDays(2),
-            ],
-            [
-                'title' => 'Share your home office setup!',
-                'content' => "Working from home has become more common, so I thought it would be fun to share our home office setups!\n\nMy setup:\n- Standing desk from Fully\n- Ergonomic chair\n- 27\" dual monitors\n- Mechanical keyboard\n- Logitech MX Master mouse\n\nWhat's your setup like? Any recommendations for must-have items?",
-                'user_id' => $users->random()->id,
-                'created_at' => now()->subDay(),
-                'updated_at' => now()->subDay(),
-            ],
-        ];
-        
-        // Create posts and add comments and votes
-        foreach ($posts as $postData) {
-            $post = Post::create($postData);
+        // Check if specific posts already exist
+        if (!Post::where('title', 'Welcome to our Forum!')->exists()) {
+            // Create example posts
+            $posts = [
+                [
+                    'title' => 'Welcome to our Forum!',
+                    'content' => 'This is the official welcome post. Feel free to introduce yourself in the comments!',
+                    'user_id' => $users->first()->id,
+                ],
+                [
+                    'title' => 'Forum Rules and Guidelines',
+                    'content' => 'Please be respectful to other users. No spam, offensive content, or advertisements are allowed.',
+                    'user_id' => $users->first()->id,
+                ],
+            ];
             
-            // Add 2-5 comments per post
-            $commentCount = rand(2, 5);
-            for ($i = 0; $i < $commentCount; $i++) {
-                $comment = Comment::create([
-                    'post_id' => $post->id,
-                    'user_id' => $users->random()->id,
-                    'content' => $this->getRandomComment(),
-                    'created_at' => now()->subDays(rand(0, 2))->subHours(rand(1, 23)),
-                    'updated_at' => now()->subDays(rand(0, 2))->subHours(rand(1, 23)),
-                ]);
-                
-                // 50% chance to add a reply to this comment
-                if (rand(0, 1) === 1) {
-                    Comment::create([
-                        'post_id' => $post->id,
-                        'user_id' => $users->random()->id,
-                        'parent_id' => $comment->id,
-                        'content' => $this->getRandomReply(),
-                        'created_at' => $comment->created_at->addHours(rand(1, 5)),
-                        'updated_at' => $comment->created_at->addHours(rand(1, 5)),
-                    ]);
-                }
+            foreach ($posts as $post) {
+                Post::create($post);
             }
-            
-            // Add random votes
+        }
+        
+        // Create additional random posts only if we have fewer than 15 total posts
+        if (Post::count() < 15) {
             foreach ($users as $user) {
-                // 70% chance to vote on a post
-                if (rand(1, 10) <= 7) {
-                    $vote = rand(0, 1) ? 1 : -1; // Randomly upvote or downvote
-                    Vote::create([
-                        'user_id' => $user->id,
-                        'votable_id' => $post->id,
-                        'votable_type' => Post::class,
-                        'vote' => $vote,
-                    ]);
-                }
+                $postsCount = rand(0, 3);  // Each user creates 0-3 posts
+                
+                Post::factory($postsCount)->create([
+                    'user_id' => $user->id,
+                ]);
             }
         }
     }

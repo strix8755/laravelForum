@@ -1,0 +1,179 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+    /* Add some base styles */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Form element focus styles */
+    input:focus, 
+    textarea:focus, 
+    select:focus {
+        @apply outline-none ring-2 ring-primary-500/50;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        @apply w-2 h-2;
+    }
+    
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        @apply bg-primary-300 dark:bg-primary-700 rounded-full;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary-400 dark:bg-primary-600;
+    }
+    
+    /* Dark mode text selection */
+    ::selection {
+        @apply bg-primary-600/30 dark:bg-primary-500/30;
+    }
+    
+    /* Code styling */
+    code {
+        @apply bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded-md text-sm border border-gray-200 dark:border-gray-700;
+    }
+    
+    /* Link styling */
+    .prose a:not(.btn) {
+        @apply text-primary-600 dark:text-primary-400 no-underline border-b border-primary-200 dark:border-primary-700 hover:border-primary-500 dark:hover:border-primary-400 transition-colors;
+    }
+
+    /* Apply custom focus styles site-wide */
+    :focus-visible {
+        @apply outline-none ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-800;
+    }
+
+    /* Better default link styling */
+    a {
+        @apply transition-colors duration-200;
+    }
+}
+
+@layer components {
+    /* Button component styles */
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    }
+    
+    .btn-secondary {
+        @apply bg-secondary-600 hover:bg-secondary-700 focus:ring-secondary-500;
+    }
+    
+    .btn-outline {
+        @apply text-primary-600 bg-transparent border-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:border-primary-400 dark:hover:bg-primary-900/20;
+    }
+    
+    /* Card component styles */
+    .card {
+        @apply bg-white dark:bg-gray-800 rounded-xl shadow-smooth border border-gray-100 dark:border-gray-700 overflow-hidden;
+    }
+    
+    /* Badge component styles */
+    .badge {
+        @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    }
+    
+    .badge-primary {
+        @apply bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300;
+    }
+    
+    .badge-secondary {
+        @apply bg-secondary-100 text-secondary-800 dark:bg-secondary-900 dark:text-secondary-300;
+    }
+    
+    /* Form input styles */
+    .form-input {
+        @apply w-full rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white;
+    }
+
+    /* Button variants */
+    .btn-primary {
+        @apply bg-primary-700 text-white hover:bg-primary-800 focus:ring-primary-500;
+    }
+    
+    .btn-secondary {
+        @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600;
+    }
+
+    .btn-outline {
+        @apply border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-primary-500 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800;
+    }
+
+    /* Card component */
+    .card-header {
+        @apply px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50;
+    }
+
+    .card-body {
+        @apply p-6;
+    }
+
+    .card-footer {
+        @apply px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700;
+    }
+
+    /* Form elements */
+    .form-input,
+    .form-textarea,
+    .form-select {
+        @apply rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white;
+    }
+
+    .form-checkbox,
+    .form-radio {
+        @apply rounded border-gray-300 dark:border-gray-700 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 dark:bg-gray-800;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+    }
+}
+
+@layer utilities {
+    /* Add responsive utilities */
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+    }
+    
+    /* Glass morphism styles */
+    .bg-glass {
+        @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg border border-white/20 dark:border-gray-800/30;
+    }
+    
+    /* Hover animations */
+    .hover-lift {
+        @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-md;
+    }
+    
+    .hover-grow {
+        @apply transition-transform duration-300 hover:scale-105;
+    }
+    
+    /* Gradient text */
+    .text-gradient {
+        @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+}

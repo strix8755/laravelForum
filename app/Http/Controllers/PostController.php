@@ -166,9 +166,12 @@ class PostController extends Controller
             ['vote' => $request->vote]
         );
         
+        $userVote = $request->vote;
+        
         // If the new vote is the same as the old one, remove it (toggle behavior)
         if ($vote->wasRecentlyCreated === false && $vote->wasChanged() === false) {
             $vote->delete();
+            $userVote = null;
         }
         
         // Return updated score
@@ -176,7 +179,8 @@ class PostController extends Controller
         
         return response()->json([
             'success' => true,
-            'score' => $score
+            'score' => $score,
+            'userVote' => $userVote
         ]);
     }
 }

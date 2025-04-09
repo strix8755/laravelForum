@@ -57,7 +57,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        $this->authorize('update', $comment);
+        // Check if user is authorized to update this comment
+        if (Auth::id() !== $comment->user_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
         
         $request->validate([
             'content' => 'required|string'
@@ -65,6 +71,14 @@ class CommentController extends Controller
         
         $comment->content = $request->content;
         $comment->save();
+        
+        // If this is an AJAX request, return JSON response
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'comment' => $comment
+            ]);
+        }
         
         return redirect()->back()->with('success', 'Comment updated successfully!');
     }
@@ -74,9 +88,23 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $this->authorize('delete', $comment);
+        // Check if user is authorized to delete this comment
+        if (Auth::id() !== $comment->user_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
         
         $comment->delete();
+        
+        // If this is an AJAX request, return JSON response
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment deleted successfully'
+            ]);
+        }
         
         return redirect()->back()->with('success', 'Comment deleted successfully!');
     }

@@ -1,0 +1,21 @@
+/* Toast notification animation styles */
+.toast-enter {
+    transform: translateY(1rem);
+    opacity: 0;
+}
+
+.toast-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: opacity 300ms, transform 300ms;
+}
+
+.toast-exit {
+    opacity: 1;
+}
+
+.toast-exit-active {
+    transform: translateY(1rem);
+    opacity: 0;
+    transition: opacity 300ms, transform 300ms;
+}

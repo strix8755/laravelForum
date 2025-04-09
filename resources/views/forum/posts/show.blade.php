@@ -203,6 +203,9 @@
 </div>
 
 @push('scripts')
+<script src="{{ asset('js/toast.js') }}"></script>
+<script src="{{ asset('js/forum.js') }}"></script>
+<script src="{{ asset('js/comment-management.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Handle voting for posts

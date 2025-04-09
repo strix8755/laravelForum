@@ -95,4 +95,46 @@
                                             <span>{{ $post->created_at->diffForHumans() }}</span>
                                             <span class="mx-2">•</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 00-2
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                            </svg>
+                                        </div>
+                                    </a>
+                                </div>
+                            @empty
+                                <div class="py-4 text-gray-600 dark:text-gray-300">You have not created any posts yet.</div>
+                            @endforelse
+                        </div>
+                    </x-card>
+                </div>
+
+                <div>
+                    <x-card>
+                        <x-slot:header>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Comments</h3>
+                        </x-slot:header>
+
+                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                            @forelse(Auth::user()->comments()->latest()->take(5)->get() as $comment)
+                                <div class="py-4 {{ !$loop->first ? 'pt-4' : '' }} {{ !$loop->last ? 'pb-4' : '' }}">
+                                    <a href="{{ route('posts.show', $comment->post) }}" class="block hover:bg-gray-50 dark:hover:bg-gray-800/60 -mx-6 px-6 py-2 rounded-lg">
+                                        <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">{{ Str::limit($comment->content, 100) }}</p>
+                                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span>{{ $comment->created_at->diffForHumans() }}</span>
+                                            <span class="mx-2">•</span>
+                                            <span>On: {{ Str::limit($comment->post->title, 30) }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            @empty
+                                <div class="py-4 text-gray-600 dark:text-gray-300">You have not posted any comments yet.</div>
+                            @endforelse
+                        </div>
+                    </x-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

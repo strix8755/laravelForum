@@ -11,8 +11,11 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Styles -->
+    @vite(['resources/css/app.css', 'resources/css/toast.css', 'resources/js/app.js'])
+    
+    <!-- Additional Styles -->
+    @stack('styles')
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -29,6 +32,22 @@
 
         <!-- Page Content -->
         <main>
+            @if (session('success'))
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
+                    <div class="bg-green-100 dark:bg-green-900/30 border-l-4 border-green-500 text-green-700 dark:text-green-300 p-4" role="alert">
+                        <p>{{ session('success') }}</p>
+                    </div>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
+                    <div class="bg-red-100 dark:bg-red-900/30 border-l-4 border-red-500 text-red-700 dark:text-red-300 p-4" role="alert">
+                        <p>{{ session('error') }}</p>
+                    </div>
+                </div>
+            @endif
+
             @hasSection('content')
                 @yield('content')
             @else
